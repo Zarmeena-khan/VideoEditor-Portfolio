@@ -1,56 +1,71 @@
-"use client";
-
-import { motion } from "framer-motion";
+'use client';
 
 const stats = [
-  { value: "18", label: "Years Old" },
-  { value: "Fresh", label: "Experience" },
-  { value: "CS", label: "Field" },
-  { value: "AI", label: "Focus" },
+  { number: '2.5+', label: 'Years Experience' },
+  { number: '50+', label: 'Projects Delivered' },
+  { number: '20+', label: 'Happy Clients' },
+  { number: '5M+', label: 'Views Generated' },
 ];
 
 export default function About() {
   return (
-    <motion.section
-      id="about"
-      className="section-shell"
-      initial={{ opacity: 0, y: 24 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6 }}
-      viewport={{ once: true }}
-    >
-      <div className="mx-auto max-w-4xl rounded-[2rem] border border-[rgba(0,212,212,0.2)] bg-panel p-10 shadow-glow">
-        <h2 className="section-title text-center">About Me</h2>
-        <div className="section-subtitle text-center mx-auto space-y-4 max-w-3xl">
-          <p>
-            Hello! I&apos;m Zarmeena Khan, an 18-year-old passionate learner transitioning from the
-            medical field to computer science. My journey in tech began with curiosity and has
-            evolved into a deep interest in artificial intelligence and robotics.
-          </p>
-          <p>
-            Currently, I&apos;m pursuing an Agentic Robotic AI Engineer course, expanding my
-            knowledge in cutting-edge technology. My background in medical studies has given me a
-            unique perspective on problem-solving and analytical thinking.
-          </p>
-          <p>
-            I believe in continuous learning and am excited about the possibilities that technology
-            offers. My goal is to contribute to the field of AI and robotics, creating solutions
-            that can make a positive impact.
-          </p>
-        </div>
-
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {stats.map((stat) => (
+    <section id="about" className="py-20 px-6 md:px-8">
+      <div className="max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-16 items-start">
+          {/* Left: profile photo placeholder */}
+          <div>
             <div
-              key={stat.label}
-              className="glow-card p-6 text-center"
+              className="aspect-[3/4] rounded-lg border flex items-center justify-center"
+              style={{
+                backgroundColor: '#240F11',
+                borderColor: 'rgba(107, 30, 35, 0.35)',
+              }}
             >
-              <p className="text-3xl font-bold text-accent">{stat.value}</p>
-              <p className="mt-2 text-sm text-muted">{stat.label}</p>
+              <span className="text-muted font-barlow text-lg">Your Photo Here</span>
             </div>
-          ))}
+          </div>
+
+          {/* Right: story, badge, bio, stats */}
+          <div className="space-y-6">
+            <h2 className="font-bebas text-4xl md:text-5xl text-cream tracking-wide">
+              THE STORY BEHIND THE EDIT
+            </h2>
+
+            <div
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-crimson-mid bg-velvet-bg2"
+              style={{ borderColor: 'rgba(107, 30, 35, 0.35)' }}
+            >
+              <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse shrink-0" />
+              <span className="text-cream font-barlow text-sm">Available for freelance work</span>
+            </div>
+
+            <div className="space-y-4">
+              <p className="text-cream font-barlow leading-relaxed text-lg">
+                A Creative Video Editor with 2.5+ years of experience crafting high-quality and
+                engaging visual content. Skilled in cinematic editing, motion graphics, animations,
+                and modern social media content styles.
+              </p>
+              <p className="text-cream font-barlow leading-relaxed text-lg">
+                Experienced in editing property videos, promotional ads, reels, and brand-focused
+                content with clean storytelling. Passionate about creating visually strong edits
+                that capture attention and increase audience engagement.
+              </p>
+            </div>
+
+            <div
+              className="grid grid-cols-2 gap-6 pt-8 border-t"
+              style={{ borderColor: 'rgba(107, 30, 35, 0.35)' }}
+            >
+              {stats.map((stat) => (
+                <div key={stat.label} className="border-l-2 border-crimson-glow pl-4">
+                  <div className="text-crimson-glow font-bebas text-3xl mb-1">{stat.number}</div>
+                  <div className="text-muted font-barlow text-sm">{stat.label}</div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
-    </motion.section>
+    </section>
   );
 }

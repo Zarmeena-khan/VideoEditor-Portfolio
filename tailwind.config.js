@@ -7,17 +7,27 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        background: "#050a18",
-        surface: "#0a1628",
-        panel: "#070d1f",
-        accent: "#00d4d4",
-        accentSoft: "#00ffff",
-        electric: "#0066ff",
-        text: "#ffffff",
-        muted: "#b0b8c8",
+        crimson: {
+          deep: '#2C0F12',
+          mid: '#6B1E23',
+          accent: '#C0392B',
+          glow: '#E05252',
+        },
+        velvet: {
+          bg: '#160A0B',
+          bg2: '#1E0C0E',
+          bg3: '#240F11',
+        },
+        cream: '#F2ECE4',
+        muted: '#9A837F',
       },
       boxShadow: {
-        glow: "0 0 40px rgba(0, 212, 212, 0.18)",
+        glow: "0 0 40px rgba(224, 82, 82, 0.2)",
+      },
+      fontFamily: {
+        bebas: 'var(--font-bebas)',
+        barlow: 'var(--font-barlow)',
+        cormorant: 'var(--font-cormorant)',
       },
     },
   },
