@@ -1,191 +1,141 @@
-'use client';
+"use client";
 
-import { useRef, useEffect } from 'react';
+import { Code2, LayoutGrid, Monitor, Palette, Sparkles } from "lucide-react";
+import { motion } from "framer-motion";
+import { useState } from "react";
 
-export default function Projects() {
-  const projects = [
-    {
-      id: 1,
-      cat: 'Property Video',
-      name: 'Luxury Estate Tour',
-      videoSrc: '/videos/project-1.mp4',
-      bgGradient: 'linear-gradient(145deg,#1a0810,#2C0F12)',
-    },
-    {
-      id: 2,
-      cat: 'Brand Film',
-      name: 'Urban Pulse',
-      videoSrc: '/videos/project-2.mp4',
-      bgGradient: 'linear-gradient(145deg,#0e0f18,#1a1028)',
-    },
-    {
-      id: 3,
-      cat: 'Social Media',
-      name: 'Trending Reels',
-      videoSrc: '/videos/project-3.mp4',
-      bgGradient: 'linear-gradient(145deg,#0a1410,#0f1e18)',
-    },
-    {
-      id: 4,
-      cat: 'Promo Ad',
-      name: 'Product Launch',
-      videoSrc: '/videos/project-4.mp4',
-      bgGradient: 'linear-gradient(145deg,#100a0e,#2C0F12)',
-    },
-    {
-      id: 5,
-      cat: 'Documentary',
-      name: 'Roots — Short Doc',
-      videoSrc: '/videos/project-5.mp4',
-      bgGradient: 'linear-gradient(145deg,#0e1014,#0a0e20)',
-    },
-    {
-      id: 6,
-      cat: 'Fashion',
-      name: 'Editorial Cut',
-      videoSrc: '/videos/project-6.mp4',
-      bgGradient: 'linear-gradient(145deg,#160a0b,#2a1010)',
-    },
-    {
-      id: 7,
-      cat: 'Event',
-      name: 'Live Event Recap',
-      videoSrc: '/videos/project-7.mp4',
-      bgGradient: 'linear-gradient(145deg,#0c0e14,#181028)',
-    },
-    {
-      id: 8,
-      cat: 'Motion Design',
-      name: 'Title Sequence',
-      videoSrc: '/videos/project-8.mp4',
-      bgGradient: 'linear-gradient(145deg,#0a140c,#0f1e14)',
-    },
-    {
-      id: 9,
-      cat: 'Brand Identity',
-      name: 'Inferno Series',
-      videoSrc: '/videos/project-9.mp4',
-      bgGradient: 'linear-gradient(145deg,#14100a,#221810)',
-    },
-    {
-      id: 10,
-      cat: 'Music Video',
-      name: 'Neon Nights',
-      videoSrc: '/videos/project-10.mp4',
-      bgGradient: 'linear-gradient(145deg,#0a0a14,#10102C)',
-    },
-  ];
+const filters = ["All", "Web Design", "Development", "AI", "Branding"];
+const projects = [
+  {
+    title: "BeanScene",
+    category: ["Web Design", "Development", "AI"],
+    imageUrl: "/beanscene.png.png",
+    description:
+      "AI-powered coffee ordering website with Bean Buddy chatbot (Urdu-English), cart, favorites, and multiple categories.",
+    tech: ["Next.js 14", "Tailwind CSS", "Groq API", "LLaMA 3.3"],
+    live: "https://beanscene-project.vercel.app",
+    github: "https://github.com/Zarmeena-khan/BeanScene-Project",
+  },
+  {
+    title: "StudyMind",
+    category: ["Development", "AI"],
+    imageUrl: "/studymind.png.png",
+    description:
+      "AI-powered EdTech app that generates summaries, 3D flashcards, and MCQ quizzes from text, PDFs, and images using Google Gemini.",
+    tech: ["React", "Vite", "Node.js", "Gemini API"],
+    live: "https://study-mind-chi.vercel.app",
+    github: "https://github.com/Zarmeena-khan/StudyMind",
+  },
+];
+
+const icons = {
+  "Web Design": Palette,
+  Development: Code2,
+  AI: Sparkles,
+  Branding: Monitor,
+  All: LayoutGrid,
+};
+
+export default function Portfolio() {
+  const [activeFilter, setActiveFilter] = useState("All");
+  const filtered =
+    activeFilter === "All"
+      ? projects
+      : projects.filter((project) => project.category.includes(activeFilter));
 
   return (
-    <section id="work" className="py-20 px-6 md:px-8 overflow-hidden">
-      <div className="max-w-6xl mx-auto mb-16">
-        <h2 className="font-bebas text-5xl md:text-6xl text-cream">WORK</h2>
-      </div>
-
-      {/* Row 1 - Scrolling Left */}
-      <div className="mb-8 overflow-hidden">
-        <div className="flex animate-scroll-left" style={{ width: 'max-content' }}>
-          {[...projects, ...projects].map((project, idx) => (
-            <VideoCard key={`row1-${idx}`} project={project} />
-          ))}
-        </div>
-      </div>
-
-      {/* Row 2 - Scrolling Right */}
-      <div className="overflow-hidden">
-        <div className="flex animate-scroll-right" style={{ width: 'max-content' }}>
-          {[...projects, ...projects].map((project, idx) => (
-            <VideoCard key={`row2-${idx}`} project={project} />
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function VideoCard({ project }) {
-  const videoRef = useRef(null);
-  const containerRef = useRef(null);
-  const progressRef = useRef(null);
-
-  const handleMouseEnter = () => {
-    if (videoRef.current && !videoRef.current.src) {
-      videoRef.current.src = project.videoSrc;
-    }
-    if (videoRef.current) {
-      videoRef.current.play();
-    }
-    if (containerRef.current) {
-      const label = containerRef.current.querySelector('[data-label]');
-      const thumb = containerRef.current.querySelector('[data-thumb]');
-      if (label) label.style.opacity = '0';
-      if (thumb) thumb.style.opacity = '0';
-    }
-  };
-
-  const handleMouseLeave = () => {
-    if (videoRef.current) {
-      videoRef.current.pause();
-      videoRef.current.currentTime = 0;
-    }
-    if (containerRef.current) {
-      const label = containerRef.current.querySelector('[data-label]');
-      const thumb = containerRef.current.querySelector('[data-thumb]');
-      if (label) label.style.opacity = '1';
-      if (thumb) thumb.style.opacity = '1';
-    }
-  };
-
-  return (
-    <div
-      ref={containerRef}
-      className="flex-shrink-0 w-44 h-72 rounded-lg overflow-hidden cursor-pointer group video-card mx-2 relative"
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
+    <motion.section
+      id="portfolio"
+      className="section-shell"
+      initial={{ opacity: 0, y: 24 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6 }}
+      viewport={{ once: true }}
     >
-      {/* Thumbnail background */}
-      <div
-        data-thumb="true"
-        className="absolute inset-0 transition-opacity duration-300"
-        style={{ background: project.bgGradient }}
-      />
+      <div className="mb-10 text-center">
+        <h2 className="section-title">Projects</h2>
+        <p className="section-subtitle mx-auto">
+          Filter through categories while I prepare new AI and frontend projects for release.
+        </p>
+      </div>
 
-      {/* Play button - Default state */}
-      <div
-        data-thumb="true"
-        className="absolute inset-0 flex items-center justify-center transition-opacity duration-300 pointer-events-none"
-      >
-        <div className="w-12 h-12 border-2 border-crimson-glow rounded-full flex items-center justify-center">
-          <div className="w-0 h-0 border-l-6 border-l-crimson-glow border-t-4 border-t-transparent border-b-4 border-b-transparent ml-1"></div>
+      <div className="grid gap-8 lg:grid-cols-[260px_1fr]">
+        <aside className="glow-card space-y-4 p-6">
+          <h3 className="text-lg font-semibold text-white">Filter Projects</h3>
+          <div className="space-y-3">
+            {filters.map((filter) => {
+              const Icon = icons[filter] || LayoutGrid;
+              return (
+                <button
+                  key={filter}
+                  type="button"
+                  onClick={() => setActiveFilter(filter)}
+                  className={`flex w-full items-center gap-3 rounded-2xl border px-4 py-3 text-left text-sm font-medium transition ${
+                    activeFilter === filter
+                      ? "border-accent bg-[rgba(0,212,212,0.15)] text-accent"
+                      : "border-[rgba(255,255,255,0.08)] text-slate-300 hover:border-accent hover:text-accent"
+                  }`}
+                >
+                  <Icon size={18} />
+                  {filter}
+                </button>
+              );
+            })}
+          </div>
+        </aside>
+
+        <div className="glow-card p-10">
+          <div className="grid gap-6 sm:grid-cols-2">
+            {filtered.map((project) => (
+              <article
+                key={project.title}
+                className="flex h-full flex-col justify-between rounded-[2rem] border border-white/10 bg-slate-950/80 p-6 shadow-[0_30px_80px_rgba(15,23,42,0.35)]"
+              >
+                <div>
+                  <img
+                    src={project.imageUrl}
+                    alt={project.title}
+                    className="w-full h-40 object-cover rounded-xl mb-2"
+                  />
+                  <h3 className="text-xl font-semibold text-white">{project.title}</h3>
+                  <p className="mt-3 text-sm leading-6 text-slate-300">
+                    {project.description}
+                  </p>
+                  <div className="mt-4 flex flex-wrap gap-2">
+                    {project.tech.map((tech) => (
+                      <span
+                        key={tech}
+                        className="rounded-full border border-white/10 bg-slate-900 px-3 py-1 text-xs font-medium uppercase tracking-[0.12em] text-slate-300"
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="mt-6 flex flex-wrap gap-3 sm:justify-end">
+                  <a
+                    href={project.live}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="rounded-full border border-accent/20 bg-accent/10 px-4 py-2 text-sm font-semibold text-accent transition hover:bg-accent/20"
+                  >
+                    Live
+                  </a>
+                  <a
+                    href={project.github}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="rounded-full border border-slate-700 bg-slate-900/90 px-4 py-2 text-sm font-semibold text-slate-200 transition hover:border-accent hover:text-accent"
+                  >
+                    GitHub
+                  </a>
+                </div>
+              </article>
+            ))}
+          </div>
         </div>
       </div>
-
-      {/* Video element - Hidden by default */}
-      <video
-        ref={videoRef}
-        className="w-full h-full object-cover opacity-0 transition-opacity duration-300"
-        loop
-        muted
-        onPlay={() => {
-          if (videoRef.current) videoRef.current.style.opacity = '1';
-        }}
-      />
-
-      {/* Label */}
-      <div
-        data-label="true"
-        className="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-velvet-bg to-transparent transition-opacity duration-300"
-      >
-        <p className="text-xs text-muted font-barlow uppercase tracking-widest">{project.cat}</p>
-        <p className="text-sm text-cream font-barlow font-semibold mt-1">{project.name}</p>
-      </div>
-
-      {/* Progress bar - appears on video play */}
-      <div
-        ref={progressRef}
-        className="absolute bottom-0 left-0 h-1 bg-crimson-glow opacity-0 transition-opacity duration-300"
-        style={{ width: '0%' }}
-      />
-    </div>
+    </motion.section>
   );
 }

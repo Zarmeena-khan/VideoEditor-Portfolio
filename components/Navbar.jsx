@@ -1,44 +1,108 @@
-'use client';
+"use client";
+
+import { Menu, X } from "lucide-react";
+import { useEffect, useState } from "react";
+
+const links = [
+  { id: "home", label: "Home" },
+  { id: "about", label: "About" },
+  { id: "skills", label: "Skills" },
+  { id: "education", label: "Education" },
+  { id: "contact", label: "Contact" },
+];
 
 export default function Navbar() {
-  const links = [
-    { label: 'About', href: '#about' },
-    { label: 'Skills', href: '#skills' },
-    { label: 'Work', href: '#work' },
-    { label: 'Contact', href: '#contact' },
-  ];
+  const [isOpen, setIsOpen] = useState(false);
+  const [activeLink, setActiveLink] = useState("home");
+
+  useEffect(() => {
+    const updateActiveLink = () => {
+      const scrollPosition = window.scrollY + 120;
+      const currentSection = links
+        .slice()
+        .reverse()
+        .find(({ id }) => {
+          const element = document.getElementById(id);
+          return element && element.offsetTop <= scrollPosition;
+        });
+
+      if (currentSection) {
+        setActiveLink(currentSection.id);
+      }
+    };
+
+    updateActiveLink();
+    window.addEventListener("scroll", updateActiveLink, { passive: true });
+    return () => window.removeEventListener("scroll", updateActiveLink);
+  }, []);
 
   return (
-    <nav className="fixed top-0 w-full z-50 pointer-events-none">
-      <div
-        className="pointer-events-auto"
-        style={{
-          background: 'linear-gradient(to bottom, rgba(22,10,11,0.97), transparent)',
-        }}
-      >
-        <div className="max-w-6xl mx-auto px-6 py-6 flex justify-between items-center">
-          {/* Logo */}
-          <div className="flex items-center gap-2">
-            <span className="text-cream font-bebas text-2xl">[ </span>
-            <span className="text-crimson-glow font-bebas text-2xl">CV</span>
-            <span className="text-cream font-bebas text-2xl"> ]</span>
-          </div>
+    <header className="sticky top-0 z-50 border-b border-[rgba(0,212,212,0.14)] bg-background/70 backdrop-blur-xl">
+      <nav className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4 md:px-8">
+        <a href="#home" className="text-2xl font-bold tracking-[0.18em]">
+          Port<span className="text-accent">folio</span>
+        </a>
 
-          {/* Links */}
-          <div className="flex gap-8">
+        <button
+          className="text-text md:hidden"
+          onClick={() => setIsOpen((prev) => !prev)}
+          aria-label="Toggle navigation menu"
+        >
+          {isOpen ? <X size={22} /> : <Menu size={22} />}
+        </button>
+
+        <div className="hidden items-center gap-8 md:flex">
+          <ul className="flex items-center gap-6">
             {links.map((link) => (
-              <a
-                key={link.label}
-                href={link.href}
-                className="text-cream hover:text-crimson-glow transition-colors duration-300 relative group text-sm font-barlow font-medium"
-              >
-                {link.label}
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-crimson-glow to-transparent group-hover:w-full transition-all duration-300"></span>
-              </a>
+              <li key={link.id}>
+                <a
+                  href={`#${link.id}`}
+                  className={`nav-link ${activeLink === link.id ? "nav-link-active" : ""}`}
+                >
+                  {link.label}
+                </a>
+              </li>
             ))}
+          </ul>
+
+          <div className="flex items-center gap-3">
+            <a
+              href="/Zarmeena_Khan_CV_Done.pdf"
+              download="Zarmeena_Khan_CV_Done.pdf"
+              className="inline-flex items-center rounded-2xl bg-red-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-red-500"
+            >
+              Download CV
+            </a>
           </div>
         </div>
-      </div>
-    </nav>
+      </nav>
+
+      {isOpen && (
+        <div className="space-y-3 border-t border-[rgba(0,212,212,0.14)] px-6 py-4 md:hidden">
+          <div className="flex items-center justify-between">
+            <a
+              href="/Zarmeena_Khan_CV_Done.pdf"
+              download="Zarmeena_Khan_CV_Done.pdf"
+              className="inline-flex items-center rounded-2xl bg-red-600 px-4 py-3 text-sm font-semibold text-white transition hover:bg-red-500"
+            >
+              Download CV
+            </a>
+          </div>
+          <ul className="space-y-3">
+            {links.map((link) => (
+              <li key={link.id}>
+                <a
+                  href={`#${link.id}`}
+                  className="block text-sm font-medium text-slate-200 transition hover:text-accent"
+                  onClick={() => setIsOpen(false)}
+                >
+                  {link.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+    </header>
   );
 }

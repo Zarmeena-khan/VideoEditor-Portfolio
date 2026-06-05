@@ -1,22 +1,24 @@
-import Navbar from "@/components/Navbar";
-import Hero from "@/components/Hero";
 import About from "@/components/About";
-import Skills from "@/components/Skills";
-import Portfolio from "@/components/Portfolio";
 import Contact from "@/components/Contact";
+import Education from "@/components/Education";
 import Footer from "@/components/Footer";
-import CustomCursor from "@/components/CustomCursor";
+import Hero from "@/components/Hero";
+import Hobbies from "@/components/Hobbies";
+import Navbar from "@/components/Navbar";
+import Portfolio from "@/components/Portfolio";
+import Skills from "@/components/Skills";
 
 export default function Home() {
   return (
-    <div className="bg-velvet-bg text-cream">
-      <CustomCursor />
+    <div className="bg-background text-text">
       <Navbar />
       <main>
         <Hero />
         <About />
         <Skills />
         <Portfolio />
+        <Education />
+        <Hobbies />
         <Contact />
       </main>
       <Footer />

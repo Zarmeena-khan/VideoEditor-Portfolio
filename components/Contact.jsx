@@ -1,185 +1,201 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
+import { CheckCircle2, GitFork, Link, Loader2, Mail, MessageSquare } from "lucide-react";
+import { motion } from "framer-motion";
+import { useState } from "react";
 
-const inputClassName =
-  'w-full px-4 py-3 rounded font-barlow placeholder-muted focus:outline-none transition-colors border contact-input';
+const initialForm = {
+  fullName: "",
+  email: "",
+  subject: "",
+  message: "",
+};
 
 export default function Contact() {
-  const [submitted, setSubmitted] = useState(false);
+  const [formData, setFormData] = useState(initialForm);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [status, setStatus] = useState("idle");
+  const [feedback, setFeedback] = useState("");
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const formData = new FormData(e.target);
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    setFeedback("");
+    setStatus("idle");
+
+    if (!formData.fullName || !formData.email || !formData.message) {
+      setStatus("error");
+      setFeedback("Please complete all required fields.");
+      return;
+    }
+
+    setIsSubmitting(true);
 
     try {
-      const response = await fetch('https://formspree.io/f/xwvydaze', {
-        method: 'POST',
-        body: formData,
+      const response = await fetch("https://formspree.io/f/xwvydaze", {
+        method: "POST",
         headers: {
-          Accept: 'application/json',
+          "Content-Type": "application/json",
         },
+        body: JSON.stringify({
+          name: formData.fullName,
+          email: formData.email,
+          subject: formData.subject,
+          message: formData.message,
+        }),
       });
 
       if (response.ok) {
-        setSubmitted(true);
-        e.target.reset();
-        setTimeout(() => setSubmitted(false), 3000);
+        setStatus("success");
+        setFeedback("Message sent successfully!");
+        setFormData(initialForm);
+      } else {
+        setStatus("error");
+        setFeedback("Failed to send message. Please try again.");
       }
     } catch (error) {
-      console.error('Error:', error);
+      setStatus("error");
+      setFeedback("An error occurred. Please try again.");
+      console.error("Form submission error:", error);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
   return (
-    <section id="contact" className="py-20 px-6 md:px-8">
-      <div className="max-w-4xl mx-auto">
-        <p className="text-sm uppercase tracking-widest text-muted mb-3 flex items-center gap-3">
-          <span className="w-8 h-px bg-gradient-to-r from-crimson-accent to-transparent" />
-          CONTACT
-        </p>
-        <h2 className="font-bebas text-5xl md:text-6xl text-cream mb-6">
-          LET&apos;S CREATE TOGETHER
-        </h2>
+    <motion.section
+      id="contact"
+      className="section-shell"
+      initial={{ opacity: 0, y: 24 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6 }}
+      viewport={{ once: true }}
+    >
+      <h2 className="section-title text-center">Contact</h2>
+      <p className="section-subtitle text-center mx-auto">
+        Let us connect for learning, collaboration, and opportunities in AI and technology.
+      </p>
 
-        <div
-          className="relative p-8 md:p-12 rounded-lg border overflow-hidden"
-          style={{
-            backgroundColor: '#1E0C0E',
-            borderColor: 'rgba(107, 30, 35, 0.35)',
-          }}
-        >
-          {/* Top-left accent line */}
-          <div
-            className="absolute top-0 left-0"
-            style={{
-              width: '70px',
-              height: '2px',
-              background: 'linear-gradient(to right, #6B1E23, #E05252)',
-            }}
-          />
-          {/* Bottom-right accent line */}
-          <div
-            className="absolute bottom-0 right-0"
-            style={{
-              width: '70px',
-              height: '2px',
-              background: 'linear-gradient(to right, #6B1E23, #E05252)',
-            }}
-          />
+      <div className="grid gap-8 lg:grid-cols-[0.95fr_1.05fr]">
+        <div className="glow-card space-y-6 p-8">
+          <div>
+            <h3 className="text-2xl font-semibold text-white">Reach Out</h3>
+            <p className="mt-2 text-sm text-muted">
+              I’m available for new projects, mentorship, and research collaboration.
+            </p>
+          </div>
 
-          <p className="text-muted font-barlow leading-relaxed mb-8 relative z-10">
-            Have a project in mind? Let&apos;s talk about how we can bring your vision to life
-            through the art of editing.
-          </p>
-
-          <form
-            action="https://formspree.io/f/xwvydaze"
-            method="POST"
-            onSubmit={handleSubmit}
-            className="space-y-6 relative z-10"
-          >
-            {submitted && (
-              <div className="p-4 rounded border border-crimson-mid bg-velvet-bg3 text-cream text-center font-barlow text-sm">
-                Message sent successfully!
-              </div>
-            )}
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <label htmlFor="name" className="block text-cream font-barlow text-sm mb-2">
-                  Your Name
-                </label>
-                <input
-                  id="name"
-                  type="text"
-                  name="name"
-                  required
-                  className={inputClassName}
-                  placeholder="John Doe"
-                />
-              </div>
-
-              <div>
-                <label htmlFor="email" className="block text-cream font-barlow text-sm mb-2">
-                  Email Address
-                </label>
-                <input
-                  id="email"
-                  type="email"
-                  name="email"
-                  required
-                  className={inputClassName}
-                  placeholder="hello@example.com"
-                />
-              </div>
-
-              <div>
-                <label htmlFor="project-type" className="block text-cream font-barlow text-sm mb-2">
-                  Project Type
-                </label>
-                <input
-                  id="project-type"
-                  type="text"
-                  name="project-type"
-                  required
-                  className={inputClassName}
-                  placeholder="Reels / Brand Film / Property Video"
-                />
-              </div>
-
-              <div>
-                <label htmlFor="budget" className="block text-cream font-barlow text-sm mb-2">
-                  Budget Range
-                </label>
-                <input
-                  id="budget"
-                  type="text"
-                  name="budget"
-                  required
-                  className={inputClassName}
-                  placeholder="e.g. $200 - $500"
-                />
-              </div>
-
-              <div className="md:col-span-2">
-                <label htmlFor="message" className="block text-cream font-barlow text-sm mb-2">
-                  Project Details
-                </label>
-                <textarea
-                  id="message"
-                  name="message"
-                  required
-                  rows={5}
-                  className={`${inputClassName} resize-none`}
-                  placeholder="Describe your vision, timeline, and any references..."
-                />
-              </div>
+          <div className="space-y-4 text-slate-300">
+            <div className="flex items-center gap-3 rounded-3xl border border-[rgba(0,212,212,0.14)] bg-[#07111f] p-4">
+              <Mail size={18} className="text-accent" />
+              <span>zarmeenakhan370@gmail.com</span>
             </div>
+          </div>
 
-            <button
-              type="submit"
-              className="w-full py-3 px-6 text-cream font-barlow font-semibold rounded transition-opacity duration-300 hover:opacity-90"
-              style={{
-                background: 'linear-gradient(to right, #6B1E23, #C0392B)',
-              }}
-            >
-              Send Message →
-            </button>
-          </form>
+          <div className="space-y-3 pt-2">
+            <p className="text-sm uppercase tracking-[0.24em] text-muted">Socials</p>
+            <div className="flex flex-wrap gap-3">
+              {[
+                  {
+                  href: "https://github.com/Zarmeena-khan",
+                  Icon: GitFork,
+                  label: "GitHub",
+                },
+                {
+                  href: "https://www.linkedin.com/in/zarmeena-khan-4b305438a",
+                  Icon: Link,
+                  label: "LinkedIn",
+                },
+                {
+                  href: "https://mail.google.com",
+                  Icon: Mail,
+                  label: "Email",
+                },
+                {
+                  href: "https://discord.com/users/zarmeenakhan_65331",
+                  Icon: MessageSquare,
+                  label: "Discord",
+                },
+              ].map(({ href, Icon, label }, index) => (
+                <a
+                  key={index}
+                  href={href}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex h-11 w-11 items-center justify-center rounded-2xl border border-[rgba(0,212,212,0.18)] bg-[#07111f] text-accent transition hover-glow"
+                  aria-label={label}
+                >
+                  <Icon size={18} className="text-accent" />
+                </a>
+              ))}
+            </div>
+          </div>
         </div>
-      </div>
 
-      <style>{`
-        .contact-input {
-          background-color: #240F11;
-          border-color: rgba(107, 30, 35, 0.35);
-          color: #F2ECE4;
-        }
-        .contact-input:focus {
-          border-color: #6B1E23;
-        }
-      `}</style>
-    </section>
+        <form onSubmit={handleSubmit} className="glow-card space-y-4 p-8">
+          <input
+            type="text"
+            name="fullName"
+            value={formData.fullName}
+            onChange={handleChange}
+            placeholder="Full Name *"
+            required
+            className="w-full rounded-2xl border border-[rgba(255,255,255,0.08)] bg-[#07111f] px-5 py-4 text-sm text-white placeholder:text-muted focus:border-accent focus:outline-none"
+          />
+          <input
+            type="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            placeholder="yourEmail@gmail.com"
+            required
+            className="w-full rounded-2xl border border-[rgba(255,255,255,0.08)] bg-[#07111f] px-5 py-4 text-sm text-white placeholder:text-muted focus:border-accent focus:outline-none"
+          />
+          <input
+            type="text"
+            name="subject"
+            value={formData.subject}
+            onChange={handleChange}
+            placeholder="Subject (optional)"
+            className="w-full rounded-2xl border border-[rgba(255,255,255,0.08)] bg-[#07111f] px-5 py-4 text-sm text-white placeholder:text-muted focus:border-accent focus:outline-none"
+          />
+          <textarea
+            name="message"
+            value={formData.message}
+            onChange={handleChange}
+            rows={5}
+            placeholder="Message *"
+            required
+            className="w-full rounded-2xl border border-[rgba(255,255,255,0.08)] bg-[#07111f] px-5 py-4 text-sm text-white placeholder:text-muted focus:border-accent focus:outline-none"
+          />
+
+          <button
+            type="submit"
+            disabled={isSubmitting}
+            className="inline-flex items-center gap-2 rounded-full bg-accent px-6 py-3 text-sm font-semibold text-background transition hover:bg-accent-soft"
+          >
+            {isSubmitting ? (
+              <>
+                <Loader2 size={16} className="animate-spin" />
+                Sending...
+              </>
+            ) : (
+              "Send Message"
+            )}
+          </button>
+
+          {feedback && (
+            <p className={`flex items-center gap-2 text-sm ${status === "success" ? "text-green-400" : "text-red-400"}`}>
+              {status === "success" && <CheckCircle2 className="animate-bounce" size={16} />}
+              {feedback}
+            </p>
+          )}
+        </form>
+      </div>
+    </motion.section>
   );
 }
