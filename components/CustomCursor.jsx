@@ -9,79 +9,86 @@ export default function CustomCursor() {
   useEffect(() => {
     const dot = dotRef.current;
     const ring = ringRef.current;
+    if (!dot || !ring) return;
 
-    let mouseX = 0;
-    let mouseY = 0;
-    let ringX = 0;
-    let ringY = 0;
-    let ringRadius = 16;
-    let targetRadius = 16;
+    let mouseX = window.innerWidth / 2;
+    let mouseY = window.innerHeight / 2;
+    let ringX = mouseX;
+    let ringY = mouseY;
+    let ringSize = 18;
+    let targetSize = 18;
 
-    const handleMouseMove = (e) => {
+    const handleMove = (e) => {
       mouseX = e.clientX;
       mouseY = e.clientY;
-
-      dot.style.left = mouseX + 'px';
-      dot.style.top = mouseY + 'px';
+      dot.style.left = `${mouseX}px`;
+      dot.style.top = `${mouseY}px`;
     };
 
-    const handleMouseEnter = (e) => {
-      if (e.target && e.target.classList && e.target.classList.contains('video-card')) {
-        targetRadius = 30;
+    const handleHover = (e) => {
+      const interactive = e.target && e.target.closest && e.target.closest('a,button,.interactive');
+      if (interactive) {
+        targetSize = 36;
+        ring.style.borderColor = 'rgba(255,30,39,0.95)';
+      } else {
+        targetSize = 18;
+        ring.style.borderColor = 'rgba(255,30,39,0.75)';
       }
     };
 
-    const handleMouseLeave = (e) => {
-      if (e.target && e.target.classList && e.target.classList.contains('video-card')) {
-        targetRadius = 16;
-      }
-    };
-
+    let rafId = 0;
     const animate = () => {
-      ringX += (mouseX - ringX) * 0.2;
-      ringY += (mouseY - ringY) * 0.2;
-      ringRadius += (targetRadius - ringRadius) * 0.1;
+      ringX += (mouseX - ringX) * 0.18;
+      ringY += (mouseY - ringY) * 0.18;
+      ringSize += (targetSize - ringSize) * 0.12;
 
-      ring.style.left = ringX + 'px';
-      ring.style.top = ringY + 'px';
-      ring.style.width = ringRadius * 2 + 'px';
-      ring.style.height = ringRadius * 2 + 'px';
+      ring.style.left = `${ringX}px`;
+      ring.style.top = `${ringY}px`;
+      ring.style.width = `${ringSize * 2}px`;
+      ring.style.height = `${ringSize * 2}px`;
 
-      requestAnimationFrame(animate);
+      rafId = requestAnimationFrame(animate);
     };
 
-    document.addEventListener('mousemove', handleMouseMove);
-    document.addEventListener('mouseenter', handleMouseEnter, true);
-    document.addEventListener('mouseleave', handleMouseLeave, true);
+    document.addEventListener('mousemove', handleMove);
+    document.addEventListener('mousemove', handleHover);
+    document.addEventListener('mouseenter', handleHover, true);
+    document.addEventListener('mouseleave', handleHover, true);
 
-    const animationId = requestAnimationFrame(animate);
+    rafId = requestAnimationFrame(animate);
 
     return () => {
-      document.removeEventListener('mousemove', handleMouseMove);
-      document.removeEventListener('mouseenter', handleMouseEnter, true);
-      document.removeEventListener('mouseleave', handleMouseLeave, true);
-      cancelAnimationFrame(animationId);
+      document.removeEventListener('mousemove', handleMove);
+      document.removeEventListener('mousemove', handleHover);
+      document.removeEventListener('mouseenter', handleHover, true);
+      document.removeEventListener('mouseleave', handleHover, true);
+      cancelAnimationFrame(rafId);
     };
   }, []);
 
   return (
     <>
-      {/* Dot */}
       <div
         ref={dotRef}
-        className="fixed w-2 h-2 bg-crimson-glow rounded-full pointer-events-none z-[9999]"
+        className="fixed z-[9999] pointer-events-none rounded-full"
         style={{
+          width: '10px',
+          height: '10px',
           transform: 'translate(-50%, -50%)',
-          boxShadow: '0 0 8px rgba(224, 82, 82, 0.6)',
+          backgroundColor: 'var(--red)',
+          boxShadow: '0 0 12px rgba(255,30,39,0.9)',
         }}
       />
-      {/* Ring */}
+
       <div
         ref={ringRef}
-        className="fixed border-2 border-crimson-glow rounded-full pointer-events-none z-[9999]"
+        className="fixed z-[9998] pointer-events-none rounded-full"
         style={{
           transform: 'translate(-50%, -50%)',
-          boxShadow: '0 0 16px rgba(224, 82, 82, 0.3)',
+          border: '2px solid rgba(255,30,39,0.75)',
+          boxShadow: '0 0 28px rgba(255,30,39,0.22)',
+          width: '36px',
+          height: '36px',
         }}
       />
     </>

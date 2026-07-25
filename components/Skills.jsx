@@ -1,12 +1,12 @@
 'use client';
 
+import { useEffect, useRef, useState } from 'react';
+
 const skills = [
   { name: 'Premiere Pro', level: 'Expert', percentage: 95 },
   { name: 'After Effects', level: 'Advanced', percentage: 88 },
   { name: 'DaVinci Resolve', level: 'Advanced', percentage: 85 },
-  { name: 'Adobe Audition', level: 'Proficient', percentage: 75 },
   { name: 'Photoshop', level: 'Proficient', percentage: 72 },
-  { name: 'Color Grading', level: 'Advanced', percentage: 90 },
 ];
 
 const FILM_STRIP_TOOLS =
@@ -33,9 +33,37 @@ function FilmStripHoles() {
 }
 
 export default function Skills() {
+  const sectionRef = useRef(null);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.2 }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <section id="skills" className="py-20 px-6 md:px-8">
-      <div className="max-w-6xl mx-auto">
+      <div
+        ref={sectionRef}
+        className="max-w-6xl mx-auto transition-all duration-600 ease-out"
+        style={{
+          opacity: isVisible ? 1 : 0,
+          transform: isVisible ? 'translateY(0)' : 'translateY(30px)',
+        }}
+      >
         <p className="text-sm uppercase tracking-widest text-muted mb-3 flex items-center gap-3">
           <span className="w-8 h-px bg-gradient-to-r from-crimson-accent to-transparent" />
           SKILLS
@@ -65,11 +93,11 @@ export default function Skills() {
         </div>
 
         {/* Skill cards grid */}
-        <div className="grid gap-6 grid-cols-[repeat(auto-fill,minmax(190px,1fr))]">
+        <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-4 justify-items-center">
           {skills.map((skill) => (
             <div
               key={skill.name}
-              className="group relative overflow-hidden rounded-lg border p-6 min-h-[150px] flex flex-col justify-between"
+              className="w-full max-w-[320px] group relative overflow-hidden rounded-lg border p-6 min-h-[150px] flex flex-col justify-between"
               style={{
                 backgroundColor: '#1E0C0E',
                 borderColor: 'rgba(107, 30, 35, 0.35)',
@@ -77,8 +105,9 @@ export default function Skills() {
             >
               {/* Hover: crimson gradient top border slides in from left */}
               <div
-                className="absolute top-0 left-0 h-[2px] w-0 group-hover:w-full transition-all duration-500 ease-out"
+                className="absolute top-0 left-0 w-0 group-hover:w-full transition-all duration-500 ease-out"
                 style={{
+                  height: '2px',
                   background: 'linear-gradient(to right, #6B1E23, #E05252, #C0392B)',
                 }}
               />
@@ -90,14 +119,15 @@ export default function Skills() {
                 <p className="text-muted font-barlow text-sm mb-6">{skill.level}</p>
               </div>
 
+              {/* Progress bar - using inline styles */}
               <div
                 className="w-full rounded-full overflow-hidden"
-                style={{ height: '2px', backgroundColor: '#240F11' }}
+                style={{ height: '3px', backgroundColor: '#240F11' }}
               >
                 <div
                   style={{
                     width: `${skill.percentage}%`,
-                    height: '2px',
+                    height: '3px',
                     background: 'linear-gradient(90deg, #6B1E23, #E05252)',
                   }}
                 />

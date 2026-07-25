@@ -1,16 +1,15 @@
 @import "tailwindcss";
 
 :root {
-  --deep: #2C0F12;
-  --mid: #6B1E23;
-  --accent: #C0392B;
-  --glow: #E05252;
-  --bg: #160A0B;
-  --bg2: #1E0C0E;
-  --bg3: #240F11;
-  --text: #F2ECE4;
-  --muted: #9A837F;
-  --border: rgba(107, 30, 35, 0.35);
+  --bg: #050405;
+  --bg-soft: #0d0b0d;
+  --red: #FF1E27;
+  --red-dark: #D71622;
+  --glow: rgba(255, 30, 39, 0.24);
+  --text: #F9F5EF;
+  --cream: #F3ECE6;
+  --muted: #A29A92;
+  --border: rgba(255, 30, 39, 0.18);
 }
 
 html {
@@ -18,16 +17,23 @@ html {
 }
 
 body {
-  background: linear-gradient(135deg, var(--bg) 0%, var(--bg2) 50%, var(--bg3) 100%);
+  min-height: 100vh;
+  margin: 0;
+  background: radial-gradient(circle at top, rgba(255, 30, 39, 0.08), transparent 24%), var(--bg);
   color: var(--text);
   font-family: var(--font-barlow), Arial, Helvetica, sans-serif;
 }
 
 * {
+  box-sizing: border-box;
   scroll-behavior: smooth;
 }
 
-/* Scroll bar styling */
+::selection {
+  background: var(--red);
+  color: #111;
+}
+
 ::-webkit-scrollbar {
   width: 10px;
 }
@@ -37,15 +43,58 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--mid);
+  background: rgba(255, 30, 39, 0.28);
   border-radius: 5px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--accent);
+  background: var(--red);
 }
 
-/* Animations */
+.bg-pitch-black {
+  background: var(--bg);
+}
+
+.bg-red-theme {
+  background: var(--red);
+}
+
+.bg-red-theme-hover:hover {
+  background: var(--red-dark);
+}
+
+.text-pure-red {
+  color: var(--red);
+}
+
+.border-red-soft {
+  border-color: var(--border);
+}
+
+.shadow-red-glow {
+  box-shadow: 0 0 48px var(--glow);
+}
+
+.btn-outline-red {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text);
+}
+
+.btn-outline-red:hover {
+  background: rgba(255, 30, 39, 0.12);
+  border-color: var(--red);
+}
+
+.btn-solid-red {
+  background: var(--red);
+  color: #111;
+}
+
+.btn-solid-red:hover {
+  background: var(--red-dark);
+}
+
 @keyframes scrollLeft {
   0% {
     transform: translateX(0);
@@ -109,4 +158,227 @@ body {
 .reveal.visible {
   opacity: 1;
   transform: none;
+}
+.scroll-left {
+  animation: scrollLeft 30s linear infinite;
+}
+
+.scroll-right {
+  animation: scrollRight 32s linear infinite;
+  transform: translateX(-50%);
+}
+
+.scroll-left:hover,
+.scroll-right:hover {
+  animation-play-state: paused;
+}
+
+@media (max-width: 767px) {
+  /* Global padding for mobile sections */
+  section {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+
+  .nav-links {
+    display: none !important;
+  }
+
+  .hamburger-menu {
+    display: flex !important;
+  }
+}
+
+/* Hamburger menu styles */
+.hamburger-menu {
+  display: none;
+  flex-direction: column;
+  gap: 6px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+}
+
+.hamburger-menu span {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background-color: #E05252;
+  transition: all 0.3s ease;
+}
+
+.hamburger-menu.open span:nth-child(1) {
+  transform: rotate(45deg) translate(10px, 10px);
+}
+
+.hamburger-menu.open span:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger-menu.open span:nth-child(3) {
+  transform: rotate(-45deg) translate(7px, -7px);
+}
+
+@media (max-width: 767px) {
+  .hamburger-menu {
+    display: flex;
+  }
+  
+  .nav-links {
+    display: none;
+  }
+
+  .mobile-menu {
+    position: fixed;
+    inset: 0;
+    background: #000;
+    z-index: 40;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .mobile-menu.open {
+    display: flex;
+  }
+
+  .mobile-menu a {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem;
+    color: #E05252;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    transition: opacity 0.3s ease;
+  }
+
+  .mobile-menu a:hover {
+    opacity: 0.8;
+  }
+}
+
+/* Hero mobile styles */
+@media (max-width: 767px) {
+  .hero-title {
+    font-size: clamp(2.5rem, 10vw, 3.5rem) !important;
+  }
+
+  .hero-subtitle {
+    font-size: 1rem !important;
+  }
+
+  .hero-role {
+    font-size: 0.75rem !important;
+  }
+
+  .hero-buttons {
+    flex-direction: column !important;
+    gap: 1rem !important;
+  }
+
+  .hero-button {
+    width: 100% !important;
+  }
+}
+
+/* About mobile styles */
+@media (max-width: 767px) {
+  .about-container {
+    flex-direction: column !important;
+  }
+
+  .about-image {
+    max-width: 100% !important;
+    max-height: 300px !important;
+  }
+
+  .about-image-container {
+    padding-bottom: 100% !important;
+    max-height: 300px !important;
+  }
+
+  .stats-grid {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 1rem !important;
+  }
+
+  .stat-item {
+    min-width: auto !important;
+  }
+}
+
+/* Tools/Skills mobile styles */
+@media (max-width: 767px) {
+  .tools-grid {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 1rem !important;
+    max-width: 100% !important;
+  }
+
+  .tool-card {
+    max-width: 100% !important;
+  }
+
+  .tool-label {
+    width: 3rem !important;
+    height: 3rem !important;
+    font-size: 0.9rem !important;
+  }
+
+  .tool-name {
+    font-size: 0.85rem !important;
+  }
+
+  .tool-level {
+    font-size: 0.7rem !important;
+  }
+}
+
+/* Work mobile styles */
+@media (max-width: 767px) {
+  .video-card {
+    width: 120px !important;
+    height: 210px !important;
+  }
+
+  .video-card.landscape {
+    width: 220px !important;
+    height: 124px !important;
+  }
+}
+
+/* Contact mobile styles */
+@media (max-width: 767px) {
+  .contact-form-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .contact-form-full {
+    grid-column: 1 !important;
+  }
+
+  .contact-button {
+    width: 100% !important;
+  }
+
+  .contact-box {
+    padding: 1.5rem !important;
+  }
+}
+
+/* Footer mobile styles */
+@media (max-width: 767px) {
+  .footer-container {
+    flex-direction: column !important;
+    text-align: center !important;
+  }
+
+  .footer-item {
+    width: 100% !important;
+  }
 }

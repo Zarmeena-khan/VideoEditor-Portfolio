@@ -5,12 +5,14 @@ const bebasNeue = Bebas_Neue({
   weight: "400",
   subsets: ["latin"],
   variable: "--font-bebas",
+  display: "swap",
 });
 
 const barlow = Barlow({
   weight: ["300", "400", "500", "600"],
   subsets: ["latin"],
   variable: "--font-barlow",
+  display: "swap",
 });
 
 const cormorant = Cormorant_Garamond({
@@ -18,12 +20,13 @@ const cormorant = Cormorant_Garamond({
   style: ["normal", "italic"],
   subsets: ["latin"],
   variable: "--font-cormorant",
+  display: "swap",
 });
 
 export const metadata = {
   title: "Creative Video Editor | Portfolio",
   description:
-    "Creative Video Editor with 2.5+ years of experience in cinematic editing, motion graphics, and brand content.",
+    "Creative Video Editor with cinematic editing, motion graphics, color grading, and storytelling.",
 };
 
 export default function RootLayout({ children }) {
@@ -32,7 +35,7 @@ export default function RootLayout({ children }) {
       lang="en"
       className={`${bebasNeue.variable} ${barlow.variable} ${cormorant.variable} h-full scroll-smooth`}
     >
-      <body className="min-h-full flex flex-col cursor-none">{children}</body>
+      <body className="min-h-full flex flex-col bg-pitch-black text-cream cursor-none">{children}</body>
     </html>
   );
 }

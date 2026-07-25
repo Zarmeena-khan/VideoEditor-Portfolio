@@ -13,7 +13,7 @@ export default function Contact() {
     const formData = new FormData(e.target);
 
     try {
-      const response = await fetch('https://formspree.io/f/xwvydaze', {
+      const response = await fetch('https://formspree.io/f/mvzewnyw', {
         method: 'POST',
         body: formData,
         headers: {
@@ -43,7 +43,7 @@ export default function Contact() {
         </h2>
 
         <div
-          className="relative p-8 md:p-12 rounded-lg border overflow-hidden"
+          className="relative p-8 md:p-12 rounded-lg border overflow-hidden contact-box"
           style={{
             backgroundColor: '#1E0C0E',
             borderColor: 'rgba(107, 30, 35, 0.35)',
@@ -74,7 +74,7 @@ export default function Contact() {
           </p>
 
           <form
-            action="https://formspree.io/f/xwvydaze"
+            action="https://formspree.io/f/mvzewnyw"
             method="POST"
             onSubmit={handleSubmit}
             className="space-y-6 relative z-10"
@@ -85,7 +85,7 @@ export default function Contact() {
               </div>
             )}
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 contact-form-grid">
               <div>
                 <label htmlFor="name" className="block text-cream font-barlow text-sm mb-2">
                   Your Name
@@ -142,7 +142,7 @@ export default function Contact() {
                 />
               </div>
 
-              <div className="md:col-span-2">
+              <div className="md:col-span-2 contact-form-full">
                 <label htmlFor="message" className="block text-cream font-barlow text-sm mb-2">
                   Project Details
                 </label>
@@ -159,7 +159,7 @@ export default function Contact() {
 
             <button
               type="submit"
-              className="w-full py-3 px-6 text-cream font-barlow font-semibold rounded transition-opacity duration-300 hover:opacity-90"
+              className="py-3 px-6 text-cream font-barlow font-semibold rounded transition-opacity duration-300 hover:opacity-90 contact-button"
               style={{
                 background: 'linear-gradient(to right, #6B1E23, #C0392B)',
               }}

@@ -1,72 +1,142 @@
-'use client';
+﻿'use client';
+
+import { useEffect, useState } from 'react';
+
+const rayStyles = [
+  { top: '24%', left: '30%', width: '240%', height: '1px', angle: -18, opacity: 0.04 },
+  { top: '33%', left: '26%', width: '220%', height: '1px', angle: -14, opacity: 0.03 },
+  { top: '42%', left: '32%', width: '260%', height: '1px', angle: -20, opacity: 0.035 },
+  { top: '52%', left: '28%', width: '250%', height: '1px', angle: -16, opacity: 0.028 },
+  { top: '62%', left: '34%', width: '230%', height: '1px', angle: -12, opacity: 0.03 },
+];
 
 export default function Hero() {
+  const [showTitle, setShowTitle] = useState(false);
+  const [showSubtitle, setShowSubtitle] = useState(false);
+  const [showRole, setShowRole] = useState(false);
+  const [showButtons, setShowButtons] = useState(false);
+
+  useEffect(() => {
+    const timers = [
+      window.setTimeout(() => setShowTitle(true), 120),
+      window.setTimeout(() => setShowSubtitle(true), 260),
+      window.setTimeout(() => setShowRole(true), 420),
+      window.setTimeout(() => setShowButtons(true), 580),
+    ];
+
+    return () => timers.forEach((timer) => window.clearTimeout(timer));
+  }, []);
+
   return (
-    <section
-      id="home"
-      className="pt-28 pb-16 px-6 md:px-8"
+    <>
+      <style>{`
+        @media (max-width: 768px) {
+          .hero-title { font-size: clamp(2.2rem, 11vw, 3rem) !important; }
+          .hero-subtitle { font-size: 0.95rem !important; }
+          .hero-role { font-size: 0.7rem !important; }
+          .hero-section { padding-top: 5.25rem !important; padding-bottom: 3rem !important; min-height: 90vh !important; }
+          .hero-content-wrapper { min-height: 80vh !important; justify-content: center !important; }
+          .hero-buttons { gap: 0.6rem !important; }
+          .hero-button { padding: 0.6rem 1.2rem !important; font-size: 0.75rem !important; }
+        }
+      `}</style>
+      <section
+        id="home"
+        className="hero-section relative overflow-hidden bg-[#160A0B] text-white"
       style={{
-        background: `
-          radial-gradient(circle at 30% 50%, rgba(192, 57, 43, 0.1) 0%, transparent 50%),
-          repeating-linear-gradient(
-            0deg,
-            transparent,
-            transparent 40px,
-            rgba(107, 30, 35, 0.05) 40px,
-            rgba(107, 30, 35, 0.05) 41px
-          )
-        `,
+        paddingTop: '10rem',
+        paddingBottom: '6rem',
+        minHeight: '100vh',
       }}
     >
-      <div className="max-w-6xl mx-auto">
-        {/* Eyebrow */}
-        <p className="text-sm uppercase tracking-widest text-muted mb-6 flex items-center gap-3">
-          <span className="w-8 h-px bg-gradient-to-r from-crimson-accent to-transparent"></span>
-          Creative Video Editor
-        </p>
+      <div className="absolute inset-0 -z-10 pointer-events-none select-none overflow-hidden">
+        <div
+          className="absolute inset-0 bg-cover bg-center opacity-20 mix-blend-screen"
+          style={{
+            backgroundImage:
+              "url('https://images.unsplash.com/photo-1510511459019-5dda7724fd87?auto=format&fit=crop&w=1400&q=80')",
+          }}
+        />
 
-        {/* Name - Three lines */}
-        <h1 className="font-bebas text-7xl md:text-8xl leading-tight mb-6">
-          <div className="text-cream">YOUR</div>
+        <div className="absolute inset-x-0 top-0 h-64 bg-gradient-to-b from-[#160A0B] to-transparent opacity-90" />
+        <div className="absolute inset-y-0 right-0 w-64 bg-gradient-to-l from-[#160A0B] to-transparent opacity-90" />
+
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(107,30,35,0.2),transparent_28%)] opacity-80" />
+
+        {rayStyles.map((ray, index) => (
           <div
-            className="text-transparent bg-clip-text text-cream"
+            key={index}
+            className="absolute bg-white/5"
             style={{
-              WebkitTextStroke: '2px rgba(192, 57, 43, 0.6)',
-              textStroke: '2px rgba(192, 57, 43, 0.6)',
+              top: ray.top,
+              left: ray.left,
+              width: ray.width,
+              height: ray.height,
+              transform: `rotate(${ray.angle}deg)`,
+              opacity: ray.opacity,
             }}
+          />
+        ))}
+
+        <div className="absolute left-[70%] top-[50%] h-[280px] w-[280px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,_rgba(255,255,255,0.03)_0%,transparent_65%)] opacity-20" />
+      </div>
+
+      <div className="hero-content-wrapper relative mx-auto flex min-h-auto max-w-5xl flex-col items-center justify-center gap-4 px-6 text-center sm:px-8">
+        <h1
+          className={`hero-title inline-block whitespace-nowrap leading-[0.95] tracking-[-0.04em] uppercase font-medium transition-all duration-700 ${
+            showTitle ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'
+          }`}
+          style={{ fontFamily: 'Bebas Neue, sans-serif', fontSize: 'clamp(3.5rem, 9vw, 7rem)' }}
+        >
+          <span className="text-[#FF1E27]">CRIMSON</span>{' '}
+          <span
+            className="text-white"
+            style={{ WebkitTextStroke: '2px #ffffff', textStroke: '2px #ffffff' }}
           >
-            NAME
-          </div>
-          <div className="text-cream">HERE</div>
+            STUDIO
+          </span>
         </h1>
 
-        {/* Subtitle */}
-        <p className="font-cormorant text-2xl md:text-3xl italic text-cream mb-4">
+        <p
+          className={`hero-subtitle m-0 italic font-semibold transition-all duration-700 ${
+            showSubtitle ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'
+          }`}
+          style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: 'clamp(1rem, 3vw, 1.3rem)', transitionDelay: showSubtitle ? '0.18s' : '0s' }}
+        >
           Crafting stories, frame by frame.
         </p>
 
-        {/* Role line */}
-        <p className="text-muted text-base md:text-lg mb-8 font-barlow">
+        <p
+          className={`hero-role m-0 text-slate-300 tracking-[0.03em] transition-all duration-700 ${
+            showRole ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'
+          }`}
+          style={{ fontFamily: 'Barlow, sans-serif', fontSize: 'clamp(0.7rem, 2vw, 0.875rem)', transitionDelay: showRole ? '0.34s' : '0s' }}
+        >
           Cinematic Editing · Motion Graphics · Color Grading
         </p>
 
-        {/* CTAs */}
-        <div className="flex flex-wrap gap-6 items-center">
+        <div
+          className={`hero-buttons flex flex-wrap justify-center gap-3 transition-all duration-700 ${
+            showButtons ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'
+          }`}
+          style={{ transitionDelay: showButtons ? '0.5s' : '0s' }}
+        >
           <a
             href="#work"
-            className="px-8 py-4 bg-crimson-accent hover:bg-crimson-glow text-cream font-barlow font-semibold rounded-lg transition-all duration-300 flex items-center gap-2"
+            className="hero-button inline-flex items-center justify-center rounded-md border border-white/40 bg-white/5 px-6 py-3 text-sm font-semibold uppercase tracking-[0.02em] text-white transition duration-300 hover:border-red-400/80"
           >
             View Reel →
           </a>
+
           <a
             href="#contact"
-            className="text-cream hover:text-crimson-glow font-barlow font-semibold transition-colors duration-300 relative group"
+            className="hero-button inline-flex items-center justify-center rounded-md bg-[#FF1E27] px-6 py-3 text-sm font-semibold uppercase tracking-[0.02em] text-[#0a0a0a] shadow-[0_14px_30px_rgba(255,30,39,0.22)] transition duration-300 hover:bg-[#e8171f]"
           >
             Let&apos;s Work Together
-            <span className="absolute bottom-0 left-0 w-full h-0.5 bg-crimson-glow scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></span>
           </a>
         </div>
       </div>
     </section>
+    </>
   );
 }
