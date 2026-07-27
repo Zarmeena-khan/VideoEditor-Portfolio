@@ -236,7 +236,7 @@ export default function Work() {
               width: '56px',
               height: '56px',
               borderRadius: '50%',
-              border: '2px solid rgba(255,30,39,0.9)',
+              border: '2px solid var(--accent)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
@@ -245,30 +245,11 @@ export default function Work() {
             }}
           >
             <svg width="16" height="20" viewBox="0 0 16 20" fill="none">
-              <path d="M2 1.5L14 10L2 18.5V1.5Z" fill="#FF1E27" />
+              <path d="M2 1.5L14 10L2 18.5V1.5Z" fill="var(--accent)" />
             </svg>
           </div>
         </div>
 
-        {/* Title + Category — hidden on hover */}
-        <div
-          style={{
-            position: 'absolute',
-            left: '1rem',
-            right: '1rem',
-            bottom: '1rem',
-            zIndex: 4,
-            opacity: isHovered ? 0 : 1,
-            transition: 'opacity 0.25s ease',
-          }}
-        >
-          <p style={{ margin: 0, color: 'rgba(255,255,255,0.62)', fontFamily: '"Barlow", sans-serif', fontSize: '0.68rem', textTransform: 'uppercase', letterSpacing: '0.16em' }}>
-            {project.category}
-          </p>
-          <h3 style={{ margin: '0.35rem 0 0', color: '#FFFFFF', fontFamily: '"Bebas Neue", sans-serif', fontSize: isPortrait ? '1.05rem' : '1.1rem', lineHeight: 1.1, letterSpacing: '0.02em' }}>
-            {project.title}
-          </h3>
-        </div>
       </div>
     );
   };

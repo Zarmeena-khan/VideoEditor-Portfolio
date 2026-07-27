@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { useRef, useEffect, useState } from 'react';
 
 type ToolCard = {
@@ -10,10 +11,9 @@ type ToolCard = {
 };
 
 const tools: ToolCard[] = [
-  { label: 'Pr', name: 'Premiere Pro', level: 'Expert', accent: '#0066CC' },
-  { label: 'Ae', name: 'After Effects', level: 'Advanced', accent: '#9B59B6' },
-  { label: 'Da', name: 'DaVinci Resolve', level: 'Advanced', accent: '#C0392B' },
-  { label: 'Ps', name: 'Photoshop', level: 'Proficient', accent: '#2980B9' },
+  { label: 'Pr', name: 'Premiere Pro', level: 'Expert', accent: 'var(--accent)' },
+  { label: 'Ae', name: 'After Effects', level: 'Advanced', accent: 'var(--accent)' },
+  { label: 'Da', name: 'DaVinci Resolve', level: 'Advanced', accent: 'var(--accent)' },
 ];
 
 export default function Tools() {
@@ -45,7 +45,7 @@ export default function Tools() {
       <style>{`
         @media (min-width: 769px) {
           .tools-grid {
-            grid-template-columns: repeat(4, 1fr) !important;
+            grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
           }
         }
       `}</style>
@@ -62,7 +62,7 @@ export default function Tools() {
             <span className="text-[0.75rem] font-semibold uppercase tracking-[0.22em] text-slate-300">
               SKILLS
             </span>
-            <span className="block flex-1 h-px rounded-full bg-red-500/30" />
+            <span className="block flex-1 h-px rounded-full bg-[var(--accent)]/30" />
           </div>
 
           <h2 style={{ margin: 0, color: '#FFFFFF', fontFamily: '"Bebas Neue", sans-serif', fontSize: '3.4rem', lineHeight: 1, letterSpacing: '0.06em', textTransform: 'uppercase' }}>
@@ -70,9 +70,10 @@ export default function Tools() {
           </h2>
         </div>
 
-        <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-4 tools-grid">
+        <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3 tools-grid">
           {tools.map((tool, index) => {
             const isHovered = hoveredIndex === index;
+            const iconSize = index === 0 ? 60 : 80;
             return (
               <article
                 key={tool.name}
@@ -80,15 +81,24 @@ export default function Tools() {
                 onMouseLeave={() => setHoveredIndex(null)}
                 className={`mx-auto w-full max-w-[260px] rounded-[1rem] border p-6 text-center transition duration-300 ease-out tool-card ${
                   isHovered
-                    ? 'border-red-500/70 shadow-[0_0_18px_rgba(192,57,43,0.25)] -translate-y-1'
-                    : 'border-red-500/40 shadow-[0_0_12px_rgba(192,57,43,0.15)]'
+                    ? 'border-[color:var(--accent)]/70 shadow-[0_0_18px_var(--glow)] -translate-y-1'
+                    : 'border-[color:var(--accent)]/40 shadow-[0_0_12px_var(--glow)]'
                 } bg-[#140808D9]`}
               >
-                <div
-                  className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-[0.75rem] tool-label"
-                  style={{ background: tool.accent, boxShadow: `0 0 18px ${tool.accent}40` }}
-                >
-                  <span className="text-base font-bold leading-none text-white">{tool.label}</span>
+                <div className="mx-auto mb-4 flex h-20 w-20 items-center justify-center overflow-hidden rounded-[0.75rem]">
+                  <Image
+                    src={
+                      tool.name === 'Premiere Pro'
+                        ? '/premiere pro 2.png'
+                        : tool.name === 'After Effects'
+                          ? '/after effects.png'
+                          : '/davinci resolve.png'
+                    }
+                    alt={tool.name}
+                    width={iconSize}
+                    height={iconSize}
+                    className="h-20 w-20 object-contain"
+                  />
                 </div>
 
                 <div className="space-y-2">

@@ -46,7 +46,7 @@ export default function Contact() {
           className="relative p-8 md:p-12 rounded-lg border overflow-hidden contact-box"
           style={{
             backgroundColor: '#1E0C0E',
-            borderColor: 'rgba(107, 30, 35, 0.35)',
+            borderColor: 'var(--border)',
           }}
         >
           {/* Top-left accent line */}
@@ -55,7 +55,7 @@ export default function Contact() {
             style={{
               width: '70px',
               height: '2px',
-              background: 'linear-gradient(to right, #6B1E23, #E05252)',
+              background: 'linear-gradient(to right, var(--mid), var(--accent))',
             }}
           />
           {/* Bottom-right accent line */}
@@ -64,7 +64,7 @@ export default function Contact() {
             style={{
               width: '70px',
               height: '2px',
-              background: 'linear-gradient(to right, #6B1E23, #E05252)',
+              background: 'linear-gradient(to right, var(--mid), var(--accent))',
             }}
           />
 
@@ -161,7 +161,7 @@ export default function Contact() {
               type="submit"
               className="py-3 px-6 text-cream font-barlow font-semibold rounded transition-opacity duration-300 hover:opacity-90 contact-button"
               style={{
-                background: 'linear-gradient(to right, #6B1E23, #C0392B)',
+                background: 'linear-gradient(to right, var(--mid), var(--accent))',
               }}
             >
               Send Message →
@@ -177,7 +177,7 @@ export default function Contact() {
           color: #F2ECE4;
         }
         .contact-input:focus {
-          border-color: #6B1E23;
+          border-color: var(--accent);
         }
       `}</style>
     </section>

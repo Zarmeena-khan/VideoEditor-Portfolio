@@ -108,7 +108,7 @@ export default function Skills() {
                 className="absolute top-0 left-0 w-0 group-hover:w-full transition-all duration-500 ease-out"
                 style={{
                   height: '2px',
-                  background: 'linear-gradient(to right, #6B1E23, #E05252, #C0392B)',
+                  background: 'linear-gradient(to right, var(--mid), var(--accent), var(--glow))',
                 }}
               />
 
@@ -128,7 +128,7 @@ export default function Skills() {
                   style={{
                     width: `${skill.percentage}%`,
                     height: '3px',
-                    background: 'linear-gradient(90deg, #6B1E23, #E05252)',
+                    background: 'linear-gradient(90deg, var(--mid), var(--accent))',
                   }}
                 />
               </div>

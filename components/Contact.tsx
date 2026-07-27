@@ -284,14 +284,13 @@ export default function Contact() {
                   border: 'none',
                   borderRadius: '999px',
                   padding: '1rem 1.25rem',
-                  background: 'linear-gradient(135deg, var(--red), #E05252)',
+                  background: 'linear-gradient(135deg, var(--accent), var(--glow))',
                   color: '#0B0607',
                   fontFamily: 'var(--font-barlow)',
                   fontWeight: 700,
                   fontSize: '0.95rem',
                   letterSpacing: '0.02em',
                   cursor: 'pointer',
-                  boxShadow: '0 18px 45px rgba(255,30,39,0.22)',
                 }}
               >
                 Send Message →

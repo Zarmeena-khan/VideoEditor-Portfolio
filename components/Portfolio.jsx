@@ -79,7 +79,7 @@ function VideoCard({ project }) {
 
   return (
     <div
-      className="interactive video-card custom-cursor relative flex-shrink-0 w-[180px] h-[300px] rounded-[1.25rem] overflow-hidden border border-[#FF1E27]/20 bg-[#12060a] shadow-[0_0_35px_rgba(255,30,39,0.08)] transition-transform duration-300 hover:-translate-y-1"
+      className="interactive video-card custom-cursor relative flex-shrink-0 w-[180px] h-[300px] rounded-[1.25rem] overflow-hidden border border-[color:var(--accent)]/20 bg-[#12060a] shadow-[0_0_35px_var(--glow)] transition-transform duration-300 hover:-translate-y-1"
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
@@ -111,8 +111,8 @@ function VideoCard({ project }) {
         className="absolute inset-0 flex items-center justify-center pointer-events-none transition-opacity duration-300"
         style={{ opacity: isHovered ? 0 : 1 }}
       >
-        <div className="flex h-12 w-12 items-center justify-center rounded-full border border-[#FF1E27]/80 bg-black/25 backdrop-blur-sm">
-          <div className="ml-1 h-0 w-0 border-l-5 border-l-[#FF1E27] border-t-4 border-t-transparent border-b-4 border-b-transparent" />
+        <div className="flex h-12 w-12 items-center justify-center rounded-full border border-[color:var(--accent)]/80 bg-black/25 backdrop-blur-sm">
+          <div className="ml-1 h-0 w-0 border-l-5 border-l-[color:var(--accent)] border-t-4 border-t-transparent border-b-4 border-b-transparent" />
         </div>
       </div>
 

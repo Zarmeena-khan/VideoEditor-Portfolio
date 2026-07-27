@@ -143,7 +143,6 @@ export default function About() {
                 background: '#1a1a1a',
                 borderRadius: '28px',
                 overflow: 'hidden',
-                border: '1px solid rgba(255,255,255,0.06)',
               }}
             >
               <div
@@ -265,11 +264,11 @@ export default function About() {
               }}
             >
               A{' '}
-              <span style={{ color: '#FF1E27' }}>
+              <span style={{ color: 'var(--accent)' }}>
                 Creative Video Editor
               </span>{' '}
               with{' '}
-              <span style={{ color: '#FF1E27' }}>
+              <span style={{ color: 'var(--accent)' }}>
                 2.5+ years
               </span>{' '}
               of experience crafting high-quality and engaging visual content...
@@ -316,7 +315,7 @@ export default function About() {
                       fontFamily: '"Bebas Neue", sans-serif',
                       fontSize: '2.5rem',
                       lineHeight: 1,
-                      color: '#FF1E27',
+                      color: 'var(--accent)',
                     }}
                   >
                     {item.num}

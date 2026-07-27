@@ -52,7 +52,7 @@ export default function Navbar() {
           transition: color 0.3s;
         }
         .mobile-menu a:hover {
-          color: #FF1E27;
+          color: var(--accent);
         }
         @media (max-width: 768px) {
           .nav-links {
@@ -70,7 +70,7 @@ export default function Navbar() {
         <div className="max-w-6xl mx-auto flex justify-between items-center px-6 py-4 md:px-8">
           {/* Logo stays on left always */}
           <div style={{ fontFamily: 'Bebas Neue, sans-serif', fontSize: '1.5rem', fontWeight: 'bold', display: 'flex', gap: '0.3rem' }}>
-            <span style={{ color: '#FF1E27' }}>CRIMSON</span>
+            <span style={{ color: 'var(--accent)' }}>CRIMSON</span>
             <span style={{ color: '#ffffff' }}>STUDIO</span>
           </div>
 
@@ -80,11 +80,11 @@ export default function Navbar() {
             <a
               key={link.label}
               href={link.href}
-              className="group relative text-slate-200 transition-colors duration-300 hover:text-[#FF2E2E]"
+              className="group relative text-slate-200 transition-colors duration-300 hover:text-[var(--accent)]"
               style={{ fontFamily: 'Inter, system-ui, sans-serif' }}
             >
               {link.label}
-              <span className="absolute left-0 top-full mt-1 h-[1px] w-0 bg-[#FF2E2E] transition-all duration-300 group-hover:w-full" />
+              <span className="absolute left-0 top-full mt-1 h-[1px] w-0 bg-[var(--accent)] transition-all duration-300 group-hover:w-full" />
             </a>
           ))}
         </div>

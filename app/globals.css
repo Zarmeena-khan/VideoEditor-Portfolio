@@ -3,13 +3,15 @@
 :root {
   --bg: #050405;
   --bg-soft: #0d0b0d;
-  --red: #FF1E27;
-  --red-dark: #D71622;
-  --glow: rgba(255, 30, 39, 0.24);
+  --accent: #A31621;
+  --glow: #C13B47;
+  --mid: #6B1017;
+  --red: var(--accent);
+  --red-dark: var(--mid);
   --text: #F9F5EF;
   --cream: #F3ECE6;
   --muted: #A29A92;
-  --border: rgba(255, 30, 39, 0.18);
+  --border: rgba(163, 22, 33, 0.18);
 }
 
 html {
@@ -19,7 +21,7 @@ html {
 body {
   min-height: 100vh;
   margin: 0;
-  background: radial-gradient(circle at top, rgba(255, 30, 39, 0.08), transparent 24%), var(--bg);
+  background: radial-gradient(circle at top, rgba(163, 22, 33, 0.08), transparent 24%), var(--bg);
   color: var(--text);
   font-family: var(--font-barlow), Arial, Helvetica, sans-serif;
 }
@@ -43,7 +45,7 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(255, 30, 39, 0.28);
+  background: rgba(163, 22, 33, 0.28);
   border-radius: 5px;
 }
 
@@ -82,7 +84,7 @@ body {
 }
 
 .btn-outline-red:hover {
-  background: rgba(255, 30, 39, 0.12);
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
   border-color: var(--red);
 }
 
@@ -204,7 +206,7 @@ body {
   display: block;
   width: 24px;
   height: 2px;
-  background-color: #E05252;
+  background-color: var(--accent);
   transition: all 0.3s ease;
 }
 
@@ -248,7 +250,7 @@ body {
   .mobile-menu a {
     font-family: 'Bebas Neue', sans-serif;
     font-size: 2rem;
-    color: #E05252;
+    color: var(--accent);
     text-decoration: none;
     text-transform: uppercase;
     letter-spacing: 0.08em;

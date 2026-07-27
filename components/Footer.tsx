@@ -17,7 +17,7 @@ export default function Footer() {
         background: '#0a0a0a',
         color: '#F2ECE4',
         padding: '3rem 1.5rem 2.25rem',
-        borderTop: '1px solid rgba(192, 57, 43, 0.2)',
+        borderTop: '1px solid var(--border)',
       }}
     >
       <style>{`
@@ -49,7 +49,7 @@ export default function Footer() {
           transition: color 0.25s ease;
         }
         .footer-link:hover {
-          color: #E05252;
+          color: var(--accent);
         }
         .footer-icon {
           width: 2.35rem;
@@ -64,9 +64,9 @@ export default function Footer() {
           transition: color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
         }
         .footer-icon:hover {
-          color: #C0392B;
-          border-color: rgba(192, 57, 43, 0.45);
-          box-shadow: 0 0 18px rgba(224, 82, 82, 0.22);
+          color: var(--accent);
+          border-color: color-mix(in srgb, var(--accent) 45%, transparent);
+          box-shadow: 0 0 18px var(--glow);
           transform: translateY(-1px);
         }
         @media (max-width: 768px) {
@@ -98,13 +98,13 @@ export default function Footer() {
             <span key={item} style={{ display: 'inline-flex', alignItems: 'center' }}>
               {item}
               {index < categoryItems.length - 1 && (
-                <span style={{ margin: '0 0.5rem', color: '#C0392B' }}>•</span>
+                <span style={{ margin: '0 0.5rem', color: 'var(--accent)' }}>•</span>
               )}
             </span>
           ))}
         </div>
 
-        <div style={{ width: '100%', maxWidth: '560px', height: '1px', background: 'rgba(192, 57, 43, 0.35)' }} />
+        <div style={{ width: '100%', maxWidth: '560px', height: '1px', background: 'color-mix(in srgb, var(--accent) 35%, transparent)' }} />
 
         <nav className="footer-links">
           {navLinks.map((link) => (
@@ -139,7 +139,7 @@ export default function Footer() {
           </a>
         </div>
 
-        <div style={{ width: '100%', maxWidth: '560px', height: '1px', background: 'rgba(192, 57, 43, 0.35)' }} />
+        <div style={{ width: '100%', maxWidth: '560px', height: '1px', background: 'color-mix(in srgb, var(--accent) 35%, transparent)' }} />
 
         <div style={{ color: '#9A837F', fontFamily: 'var(--font-barlow), Arial, Helvetica, sans-serif', fontSize: '0.8rem', letterSpacing: '0.05em' }}>
           © {currentYear} Crimson Studio. All rights reserved.

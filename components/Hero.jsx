@@ -88,7 +88,7 @@ export default function Hero() {
           }`}
           style={{ fontFamily: 'Bebas Neue, sans-serif', fontSize: 'clamp(3.5rem, 9vw, 7rem)' }}
         >
-          <span className="text-[#FF1E27]">CRIMSON</span>{' '}
+          <span className="text-[var(--accent)]">CRIMSON</span>{' '}
           <span
             className="text-white"
             style={{ WebkitTextStroke: '2px #ffffff', textStroke: '2px #ffffff' }}
@@ -123,14 +123,14 @@ export default function Hero() {
         >
           <a
             href="#work"
-            className="hero-button inline-flex items-center justify-center rounded-md border border-white/40 bg-white/5 px-6 py-3 text-sm font-semibold uppercase tracking-[0.02em] text-white transition duration-300 hover:border-red-400/80"
+            className="hero-button inline-flex items-center justify-center rounded-md border border-white/40 bg-white/5 px-6 py-3 text-sm font-semibold uppercase tracking-[0.02em] text-white transition duration-300 hover:border-[var(--accent)]/80"
           >
             View Reel →
           </a>
 
           <a
             href="#contact"
-            className="hero-button inline-flex items-center justify-center rounded-md bg-[#FF1E27] px-6 py-3 text-sm font-semibold uppercase tracking-[0.02em] text-[#0a0a0a] shadow-[0_14px_30px_rgba(255,30,39,0.22)] transition duration-300 hover:bg-[#e8171f]"
+            className="hero-button inline-flex items-center justify-center rounded-md bg-[var(--accent)] px-6 py-3 text-sm font-semibold uppercase tracking-[0.02em] text-[#0a0a0a] transition duration-300 hover:bg-[var(--mid)]"
           >
             Let&apos;s Work Together
           </a>
